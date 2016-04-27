@@ -26,44 +26,17 @@ SystemManager :: SystemManager() {
 	tab[0][1] = new TableEntry ("StateIdleLocal","StateIdleLocal","rightKey",0,myActionDirRight,myConditionTrue);
 	tab[0][2] = new TableEntry ("StateIdleLocal","StateIdleLocal","incKey",0,myActionSpeedInc,myConditionTrue);
 	tab[0][3] = new TableEntry ("StateIdleLocal","StateIdleLocal","decKey",0,myActionSpeedDec,myConditionTrue);
-	tab[0][4] = new TableEntry ("StateIdleLocal","StateMovingLocal","startKey",0,myActionStart,myConditionTrue);		//myActionStartMovingLocal
-	tab[0][5] = new TableEntry ("StateMovingLocal","StateIdleLocal","TrigMovementDone",0,myActionDoNothing,myConditionTrue); 
+	tab[0][4] = new TableEntry ("StateIdleLocal","StateMovingLocal","startKey",0,myActionStart,myConditionTrue);
+	tab[0][5] = new TableEntry ("StateMovingLocal","StateIdleLocal","Trig8s",0,myActionDoNothing,myConditionTrue); 
 	
 	
-	tab[1][0] = new TableEntry ("StateUpdate1","StateUpdate2","TrigStartMovement",0,myActionDoNothing,myConditionTrue);
-	tab[1][1] = new TableEntry ("StateUpdate2","StateUpdate2","modeLomKey",0,myActionModeLom,myConditionTrue);
-	tab[1][2] = new TableEntry ("StateUpdate2","StateUpdate2","modeComKey",0,myActionModeCom,myConditionTrue);
-	tab[1][3] = new TableEntry ("StateUpdate2","StateUpdate1","TrigMovementDone",0,myActionDoNothing,myConditionTrue);
-	//tab[1][4] = new TableEntry ("StateUpdate2","StateUpdate2","getRequest",0,myActionGetRequest,myConditionTrue); 	später machen
+	tab[1][0] = new TableEntry ("StateUpdate1Local","StateUpdate2Local","Trig0",0,myActionDoNothing,myConditionTrue);
+	tab[1][1] = new TableEntry ("StateUpdate2Local","StateUpdate2Local","modeLomKey",0,myActionModeLom,myConditionTrue);
+	tab[1][2] = new TableEntry ("StateUpdate2Local","StateUpdate2Local","modeComKey",0,myActionModeCom,myConditionTrue);
+	tab[1][3] = new TableEntry ("StateUpdate2Local","StateUpdate1Local","Timer0",8000,myActionUpdate2,myConditionTrue);
 
 	tab[2][0] = new TableEntry ("StateK","StateK","Timer2",50,myAction20,myCondition20);
 	
-	/*
-	tab[3][0] = new TableEntry ("StateMotorIdle","StateCustomProfile","TrigStartProfile",0,myActionRunCustomProfile,myConditionLOM); // define condition and action
-	tab[3][1] = new TableEntry ("StateMotorIdle","StateStandardProfile","TrigStartProfile",0,myActionRunStandardProfile,myConditionCOM); // define condition and action
-	tab[3][2] = new TableEntry ("StateCustomProfile","StateMotorIdle","Timer8s",8000,myActionCustomProfileDone,myConditionTrue); //timer definieren, aktion definieren
-	tab[3][3] = new TableEntry ("StateStandardProfile","StateMotorIdle","Timer8s",8000,myActionStandardProfileDone,myConditionTrue); // aktion definieren	
-	tab[3][4] = new TableEntry ("StateMotorIdle","StateSlowMovement","TrigStartSlowMovement",0,myActionRunSlowMovement,myConditionTrue);//define action, 
-	tab[3][5] = new TableEntry ("StateSlowMovement","StateMotorIdle","TrigStopSlowMovement",0,myActionSlowMovementDone,myConditionTrue); //define action,
-	*/
-
-	/*
-	tab[4][0] = new TableEntry ("StateIdleChain","StateMovingChain","getRequest",0,myActionRequest,myConditionTrue); // define condition and action
-	tab[4][1] = new TableEntry ("StateMovingChain","StateIdleChain","getRelease",0,myActionRelease,myConditionTrue); // define condition and action
-	*/
-
-	/*
-	tab[5][0] = new TableEntry ("StateIdleMovingChain","StateSlowMovement","TrigStartMovement",0,myActionStartSlowMovement1,myConditionTrue); // define action
-	tab[5][1] = new TableEntry ("StateSlowMovement","StateStandardProfile","Timer1s",1000,myActionRunStandardProfile,myConditionTrue); // define timer and action
-	tab[5][2] = new TableEntry ("StateStandardProfile","StateWaitForAnswer","TrigMotorDone",0,myActionStandardProfileDone,myConditionTrue); //aktion definieren
-	tab[5][3] = new TableEntry ("StateWaitForAnswer","StateWaitForAnswer","getWait",0,myActionDoNothing,myConditionTrue);
-	tab[5][4] = new TableEntry ("StateWaitForAnswer","StateWaitForRelease","getReady",0,myActionStartSlowMovement2,myConditionTrue);//define action, 
-	tab[5][5] = new TableEntry ("StateWaitForRelease","StateIdleMovingChain","getRelease",0,myActionMovementDone,myConditionTrue); //define action
-	*/
-	
-
-
-
 	/*
 	tab[1][0] = new TableEntry ("StateUpdateMode0","StateUpdateMode1","Trig0",0,myActionUpdate1,myConditionTrue);
 	tab[1][1] = new TableEntry ("StateUpdateMode1","StateUpdateMode1","modeLomKey",0,myActionModeLom,myConditionTrue);
@@ -91,16 +64,14 @@ SystemManager :: SystemManager() {
 	//timerNames[2] = "Timer2";
 
 	// Initialize line numbers for all diagrams
-	lines[0] = 6; //local mode	
-	lines[1] = 4; //updating mode (5 lines (request))
-	lines[2] = 1; //Keyboard	
-	//lines[3] = 6; //Motor
+	lines[0] = 6;
+	lines[1] = 4;
+	lines[2] = 1;
 
 	// Initialize first state for all diagrams
 	actualState[0] = "StateIdleLocal";
-	actualState[1] = "StateUpdate1";
+	actualState[1] = "StateUpdate1Local";
 	actualState[2] = "StateK";
-	actualState[3] = "StateMotorIdle";
 	
 	//actualState[0] = "StateA";
 	//actualState[1] = "StateC";
@@ -190,8 +161,7 @@ void SystemManager :: actionSpeedDec(){
 void SystemManager :: actionStart(){ // Start of custom profle
 	printf("Start Key pressed \n\r"); 
 	// custom profil (speed, direction)
-	myStateMachine->sendEvent("TrigStartMovement");
-	myStateMachine->sendEvent("TrigStartProfile");
+	myStateMachine->sendEvent("Trig0");
 	return;
 }
 void SystemManager :: actionDoNothing(){ // do nothing 
@@ -200,7 +170,7 @@ void SystemManager :: actionDoNothing(){ // do nothing
 }
 
 void SystemManager :: actionUpdate2(){ // wait 8 seconds, than go back to update 1
-	myStateMachine->sendEvent("TrigMovementDone");
+	myStateMachine->sendEvent("Trig8s");
 	return;
 }
 void SystemManager :: actionModeLom(){ // local operation mode selected
