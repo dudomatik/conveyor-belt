@@ -55,7 +55,18 @@ char Keyboard::getPressedKey( )
 		case 'B': printf("**Chain Operation Mode selected\n"); //chain op
 		myStateMachine->sendEvent("modeComKey");
 		break;
-		 
+		case 'F': printf("**Request received\n"); //chain op
+		myStateMachine->sendEvent("RequestUpdate");
+		break;
+		case 'E': printf("**Ready received\n");
+		myStateMachine->sendEvent("getReady");
+		break;
+		case 'D': printf("**Wait received\n");
+		myStateMachine->sendEvent("getWait");
+		break;
+		case 'C': printf("**Release received\n");
+		myStateMachine->sendEvent("getRelease");
+		break;
 		
 		}
 	}

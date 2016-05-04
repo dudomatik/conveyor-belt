@@ -14,32 +14,54 @@ class SystemManager {
 public:
 	SystemManager();
 	~SystemManager();
+	//Diagram0
 	void actionDirLeft();
 	void actionDirRight();
 	void actionSpeedDec();
 	void actionSpeedInc();
-	void actionStart();	
+	void actionStartMovingLocal();	
 	void actionLeaveStateMovingLocal();
 	void actionDoNothing();
-	void actionUpdate2();
+	void actionStartCOM();
+	void actionStayLOM();
+	
+	//Diagram1
 	void actionModeLom();
 	void actionModeCom();
+	void actionRequestUpdate();
 	
+	//Diagram2
+	void actionKeyboard();
 	
-	void action00();
-	void action01();
-	void action02();
-	void action10();
-	void action11();
-	void action12();
-	void action13();
-	void action20();
-	bool conditionTrue();
-	bool condition00();
-	bool condition01();
-	bool condition11();
-	bool condition12();
+	//Diagram3
+	void actionCustomProfileDone();
+	void actionRunCustomProfile();
+	void actionRunStandardProfile();
+	void actionStandardProfileDone();
+	void actionStartSlowMovement();
+	void actionStopSlowMovement();
 
+	
+	//Diagram4
+	void actionStartLOM();
+	void actionStayCOM();
+	void actionRequest();
+	
+	//Diagram5
+	void actionStartSlowMovement1();
+	void actionStartStandardProfile();
+	void actionStopStandardProfile();
+	void actionStartSlowMovement2();
+	void actionMovementDone();
+	//Conditions
+	bool conditionTrue();
+	
+	//Diagram0
+	bool conditionCOM();
+	bool conditionLOM();
+	bool conditionCOMRequest0();
+	bool conditionCOMRequest1();
+	
 private:
 	
 };
