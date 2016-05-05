@@ -40,6 +40,19 @@ void myActionStartStandardProfile();
 void myActionStopStandardProfile();
 void myActionStartSlowMovement2();
 void myActionMovementDone();
+void myActionGetWait();
+
+//Diagram 6
+void myActionStartRampUp();
+void myActionUpdateRampUp();
+void myActionStartConstantMovement();
+void myActionUpdateConstantMovement();
+void myActionStartRampDown();
+void myActionUpdateRampDown();
+void myActionStopMotor();
+void myActionMoveSlow();
+void myActionUpdateSlowMovement();
+
 //Conditions
 bool myConditionTrue();
 
@@ -48,5 +61,11 @@ bool myConditionCOM();
 bool myConditionLOM();
 bool myConditionCOMRequest0();
 bool myConditionCOMRequest1();
+
+//Diagram6
+bool myConditionU1s();
+bool myConditionO1s();
+bool myConditionU6s();
+bool myConditionO6s();
 
 #endif // MYFUNCTIONS_H_

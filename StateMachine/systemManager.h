@@ -53,6 +53,19 @@ public:
 	void actionStopStandardProfile();
 	void actionStartSlowMovement2();
 	void actionMovementDone();
+	void actionGetWait();
+	
+	//Diagram 6
+	void actionStartRampUp();
+	void actionUpdateRampUp();
+	void actionStartConstantMovement();
+	void actionUpdateConstantMovement();
+	void actionStartRampDown();
+	void actionUpdateRampDown();
+	void actionStopMotor();
+	void actionMoveSlow();
+	void actionUpdateSlowMovement();
+	
 	//Conditions
 	bool conditionTrue();
 	
@@ -61,6 +74,12 @@ public:
 	bool conditionLOM();
 	bool conditionCOMRequest0();
 	bool conditionCOMRequest1();
+	
+	//Diagram6
+	bool conditionU1s();
+	bool conditionO1s();
+	bool conditionU6s();
+	bool conditionO6s();
 	
 private:
 	

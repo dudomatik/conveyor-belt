@@ -32,12 +32,40 @@ int main (void) {
 	mySystemManager = new SystemManager;
 	
 	sprintf(output,"Direction = right  ");
-	writeToDisplay (3, 2, output );
+	writeToDisplay (4, 2, output );
 	sprintf(output,"Speed = 500             ");
-	writeToDisplay (2, 2, output );
-	sprintf(output,"Mode = Local Operation Mode");
+	writeToDisplay (3, 2, output );
+	sprintf(output,"Selected Mode = Local Operation Mode");
 	writeToDisplay (1, 2, output );
+	sprintf(output,"[1] Start");
+	writeToDisplay (1, 55, output );
+	sprintf(output,"[2] Direction = left");
+	writeToDisplay (2, 55, output );
+	sprintf(output,"[3] Direction = right");
+	writeToDisplay (3, 55, output );
+	sprintf(output,"[4] Speed +100");
+	writeToDisplay (4, 55, output );
+	sprintf(output,"[5] Speed -100");
+	writeToDisplay (5, 55, output );
+	sprintf(output,"[A] Local Operation Mode");
+	writeToDisplay (6, 55, output );
+	sprintf(output,"[B] Chain Operation Mode");
+	writeToDisplay (7, 55, output );
+
+	sprintf(output,"Motor: idle                 ");
+	writeToDisplay (20, 2, output );
 	
+	//debugg
+	sprintf(output,"[F] Request");
+	writeToDisplay (9, 55, output );
+	sprintf(output,"[E] Ready");
+	writeToDisplay (10, 55, output );
+	sprintf(output,"[D] Wait");
+	writeToDisplay (11, 55, output );
+	sprintf(output,"[C] Release");
+	writeToDisplay (12, 55, output );
+
+		
 	// Start the state machine. This method blocks, so no while(1) is needed.
 	myStateMachine->runToCompletion();
 	
@@ -175,6 +203,49 @@ void myActionMovementDone(){
 	mySystemManager->actionMovementDone();
 		return;
 }
+void myActionGetWait(){
+	mySystemManager->actionGetWait();
+		return;
+}
+//Diagram 6
+
+void myActionStartRampUp(){
+	mySystemManager->actionStartRampUp();
+		return;
+}
+void myActionUpdateRampUp(){
+	mySystemManager->actionUpdateRampUp();
+		return;
+}
+void myActionStartConstantMovement(){
+	mySystemManager->actionStartConstantMovement();
+		return;
+}
+void myActionUpdateConstantMovement(){
+	mySystemManager->actionUpdateConstantMovement();
+		return;
+}
+void myActionStartRampDown(){
+	mySystemManager->actionStartRampDown();
+		return;
+}
+void myActionUpdateRampDown(){
+	mySystemManager->actionUpdateRampDown();
+		return;
+}
+void myActionStopMotor(){
+	mySystemManager->actionStopMotor();
+		return;
+}
+void myActionMoveSlow(){
+	mySystemManager->actionMoveSlow();
+		return;
+}
+void myActionUpdateSlowMovement(){
+	mySystemManager->actionUpdateSlowMovement();
+		return;
+}
+
 
 //Conditions
 bool myConditionTrue(){
@@ -193,3 +264,19 @@ bool myConditionCOMRequest0(){
 bool myConditionCOMRequest1(){
 	return mySystemManager->conditionCOMRequest1();
 }
+
+//Diagram6
+
+bool myConditionU1s(){
+	return mySystemManager->conditionU1s();
+}
+bool myConditionO1s(){
+	return mySystemManager->conditionO1s();
+}
+bool myConditionU6s(){
+	return mySystemManager->conditionU6s();
+}
+bool myConditionO6s(){
+	return mySystemManager->conditionO6s();
+}
+
