@@ -14,73 +14,32 @@ class SystemManager {
 public:
 	SystemManager();
 	~SystemManager();
-	//Diagram0
 	void actionDirLeft();
 	void actionDirRight();
 	void actionSpeedDec();
 	void actionSpeedInc();
-	void actionStartMovingLocal();	
+	void actionStart();	
 	void actionLeaveStateMovingLocal();
 	void actionDoNothing();
-	void actionStartCOM();
-	void actionStayLOM();
-	
-	//Diagram1
+	void actionUpdate2();
 	void actionModeLom();
 	void actionModeCom();
-	void actionRequestUpdate();
 	
-	//Diagram2
-	void actionKeyboard();
 	
-	//Diagram3
-	void actionCustomProfileDone();
-	void actionRunCustomProfile();
-	void actionRunStandardProfile();
-	void actionStandardProfileDone();
-	void actionStartSlowMovement();
-	void actionStopSlowMovement();
-
-	
-	//Diagram4
-	void actionStartLOM();
-	void actionStayCOM();
-	void actionRequest();
-	
-	//Diagram5
-	void actionStartSlowMovement1();
-	void actionStartStandardProfile();
-	void actionStopStandardProfile();
-	void actionStartSlowMovement2();
-	void actionMovementDone();
-	void actionGetWait();
-	
-	//Diagram 6
-	void actionStartRampUp();
-	void actionUpdateRampUp();
-	void actionStartConstantMovement();
-	void actionUpdateConstantMovement();
-	void actionStartRampDown();
-	void actionUpdateRampDown();
-	void actionStopMotor();
-	void actionMoveSlow();
-	void actionUpdateSlowMovement();
-	
-	//Conditions
+	void action00();
+	void action01();
+	void action02();
+	void action10();
+	void action11();
+	void action12();
+	void action13();
+	void action20();
 	bool conditionTrue();
-	
-	//Diagram0
-	bool conditionCOM();
-	bool conditionLOM();
-	bool conditionCOMRequest0();
-	bool conditionCOMRequest1();
-	
-	//Diagram6
-	bool conditionU1s();
-	bool conditionO1s();
-	bool conditionU6s();
-	bool conditionO6s();
-	
+	bool condition00();
+	bool condition01();
+	bool condition11();
+	bool condition12();
+
 private:
 	
 };

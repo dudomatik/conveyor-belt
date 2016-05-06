@@ -12,7 +12,7 @@ extern "C"
 {
 #include "hardware/hwFunc.h"
 }
-char output[64];
+
 SystemManager * mySystemManager;
 StateMachine * myStateMachine;
 
@@ -30,50 +30,12 @@ int main (void) {
 
 	// Create instance of top class
 	mySystemManager = new SystemManager;
-	
-	sprintf(output,"Direction = right  ");
-	writeToDisplay (4, 2, output );
-	sprintf(output,"Speed = 500             ");
-	writeToDisplay (3, 2, output );
-	sprintf(output,"Selected Mode = Local Operation Mode");
-	writeToDisplay (1, 2, output );
-	sprintf(output,"[1] Start");
-	writeToDisplay (1, 55, output );
-	sprintf(output,"[2] Direction = left");
-	writeToDisplay (2, 55, output );
-	sprintf(output,"[3] Direction = right");
-	writeToDisplay (3, 55, output );
-	sprintf(output,"[4] Speed +100");
-	writeToDisplay (4, 55, output );
-	sprintf(output,"[5] Speed -100");
-	writeToDisplay (5, 55, output );
-	sprintf(output,"[A] Local Operation Mode");
-	writeToDisplay (6, 55, output );
-	sprintf(output,"[B] Chain Operation Mode");
-	writeToDisplay (7, 55, output );
 
-	sprintf(output,"Motor: idle                 ");
-	writeToDisplay (20, 2, output );
-	
-	//debugg
-	sprintf(output,"[F] Request");
-	writeToDisplay (9, 55, output );
-	sprintf(output,"[E] Ready");
-	writeToDisplay (10, 55, output );
-	sprintf(output,"[D] Wait");
-	writeToDisplay (11, 55, output );
-	sprintf(output,"[C] Release");
-	writeToDisplay (12, 55, output );
-
-		
 	// Start the state machine. This method blocks, so no while(1) is needed.
 	myStateMachine->runToCompletion();
 	
-
-	
 }
 
-//Diagram0
 void myActionDirLeft(){
 	mySystemManager->actionDirLeft();
 		return;
@@ -91,8 +53,8 @@ void myActionSpeedDec(){
 		return;
 }
 
-void myActionStartMovingLocal(){
-	mySystemManager->actionStartMovingLocal();
+void myActionStart(){
+	mySystemManager->actionStart();
 		return;
 }
 
@@ -106,17 +68,10 @@ void myActionDoNothing(){
 		return;
 }
 
-void myActionStartCOM(){
-	mySystemManager->actionStartCOM();
+void myActionUpdate2(){
+	mySystemManager->actionUpdate2();
 		return;
 }
-void myActionStayLOM(){
-	mySystemManager->actionStayLOM();
-		return;
-}
-
-
-//Diagram1
 void myActionModeLom(){
 	mySystemManager->actionModeLom();
 		return;
@@ -126,157 +81,78 @@ void myActionModeCom(){
 		return;
 }
 
-void myActionRequestUpdate(){
-	mySystemManager->actionRequestUpdate();
-		return;
-}
-
-//Diagram2
-void myActionKeyboard(){
-	mySystemManager->actionKeyboard();
+void myAction00(){
+//	mySystemManager->action00();
 	return;
 }
 
-//Diagram 3 
-void myActionRunCustomProfile(){
-	mySystemManager->actionRunCustomProfile();
-		return;
+void myAction01(){
+	mySystemManager->action01();
+	return;
 }
 
-void myActionCustomProfileDone(){
-	mySystemManager->actionCustomProfileDone();
-		return;
+void myAction02(){
+	mySystemManager->action02();
+	return;
 }
 
-void myActionRunStandardProfile(){
-	mySystemManager->actionRunStandardProfile();
-		return;
+void myAction10(){
+	mySystemManager->action10();
+	return;
 }
 
-void myActionStandardProfileDone(){
-	mySystemManager->actionStandardProfileDone();
-		return;
-}
-void myActionStartSlowMovement(){
-	mySystemManager->actionStartSlowMovement();
-		return;
-}
-void myActionStopSlowMovement(){
-	mySystemManager->actionStopSlowMovement();
-		return;
-}
-void actionStartSlowMovement();
-
-//Diagram 4
-void myActionStartLOM(){
-	mySystemManager->actionStartLOM();
-		return;
-}
-void myActionStayCOM(){
-	mySystemManager->actionStayCOM();
-		return;
-}
-void myActionRequest(){
-	mySystemManager->actionRequest();
-		return;
+void myAction11(){
+	mySystemManager->action11();
+	return;
 }
 
-//Diagram 5
-
-void myActionStartSlowMovement1(){
-	mySystemManager->actionStartSlowMovement1();
-		return;
-}
-void myActionStartStandardProfile(){
-	mySystemManager->actionStartStandardProfile();
-		return;
-}
-void myActionStopStandardProfile(){
-	mySystemManager->actionStopStandardProfile();
-		return;
-}
-void myActionStartSlowMovement2(){
-	mySystemManager->actionStartSlowMovement2();
-		return;
-}
-void myActionMovementDone(){
-	mySystemManager->actionMovementDone();
-		return;
-}
-void myActionGetWait(){
-	mySystemManager->actionGetWait();
-		return;
-}
-//Diagram 6
-
-void myActionStartRampUp(){
-	mySystemManager->actionStartRampUp();
-		return;
-}
-void myActionUpdateRampUp(){
-	mySystemManager->actionUpdateRampUp();
-		return;
-}
-void myActionStartConstantMovement(){
-	mySystemManager->actionStartConstantMovement();
-		return;
-}
-void myActionUpdateConstantMovement(){
-	mySystemManager->actionUpdateConstantMovement();
-		return;
-}
-void myActionStartRampDown(){
-	mySystemManager->actionStartRampDown();
-		return;
-}
-void myActionUpdateRampDown(){
-	mySystemManager->actionUpdateRampDown();
-		return;
-}
-void myActionStopMotor(){
-	mySystemManager->actionStopMotor();
-		return;
-}
-void myActionMoveSlow(){
-	mySystemManager->actionMoveSlow();
-		return;
-}
-void myActionUpdateSlowMovement(){
-	mySystemManager->actionUpdateSlowMovement();
-		return;
+void myAction12(){
+	mySystemManager->action12();
+	return;
 }
 
+void myAction13(){
+	mySystemManager->action13();
+	return;
+}
 
-//Conditions
+void myAction20(){
+	mySystemManager->action20();
+	return;
+}
+
 bool myConditionTrue(){
 	return mySystemManager->conditionTrue();
 }
-//Diagram0
-bool myConditionCOM(){
-	return mySystemManager->conditionCOM();
-}
-bool myConditionLOM(){
-	return mySystemManager->conditionLOM();
-}
-bool myConditionCOMRequest0(){
-	return mySystemManager->conditionCOMRequest0();
-}
-bool myConditionCOMRequest1(){
-	return mySystemManager->conditionCOMRequest1();
+
+bool myCondition00(){
+	return mySystemManager->condition00();
 }
 
-//Diagram6
-
-bool myConditionU1s(){
-	return mySystemManager->conditionU1s();
-}
-bool myConditionO1s(){
-	return mySystemManager->conditionO1s();
-}
-bool myConditionU6s(){
-	return mySystemManager->conditionU6s();
-}
-bool myConditionO6s(){
-	return mySystemManager->conditionO6s();
+bool myCondition01(){
+	return mySystemManager->condition01();
 }
 
+bool myCondition02(){
+	return mySystemManager->conditionTrue();
+}
+
+bool myCondition10(){
+	return mySystemManager->conditionTrue();
+}
+
+bool myCondition11(){
+	return mySystemManager->condition11();
+}
+
+bool myCondition12(){
+	return mySystemManager->condition12();
+}
+
+bool myCondition13(){
+	return mySystemManager->conditionTrue();
+}
+
+bool myCondition20(){
+	return mySystemManager->conditionTrue();
+}

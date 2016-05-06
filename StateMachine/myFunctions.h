@@ -2,70 +2,54 @@
 #ifndef MYFUNCTIONS_H_
 #define MYFUNCTIONS_H_
 
-//Diagram0
 void myActionDirLeft();
 void myActionDirRight();
 void myActionSpeedInc();
 void myActionSpeedDec();
-void myActionStartMovingLocal();
+void myActionStart();
 void myActionLeaveStateMovingLocal();
 void myActionDoNothing();
-void myActionStartCOM();
-void myActionStayLOM();
-
-//Diagram1
+void myActionUpdate2();
 void myActionModeLom();
 void myActionModeCom();
-void myActionRequestUpdate();
 
-//Diagram2
-void myActionKeyboard();
 
-//Diagram3
-void myActionRunCustomProfile();
-void myActionCustomProfileDone();
-void myActionRunStandardProfile();
-void myActionStandardProfileDone();
-void myActionStartSlowMovement();
-void myActionStopSlowMovement();
 
-//Diagram4
-void myActionStartLOM();
-void myActionStayCOM();
-void myActionRequest();
 
-//Diagram5
-void myActionStartSlowMovement1();
-void myActionStartStandardProfile();
-void myActionStopStandardProfile();
-void myActionStartSlowMovement2();
-void myActionMovementDone();
-void myActionGetWait();
 
-//Diagram 6
-void myActionStartRampUp();
-void myActionUpdateRampUp();
-void myActionStartConstantMovement();
-void myActionUpdateConstantMovement();
-void myActionStartRampDown();
-void myActionUpdateRampDown();
-void myActionStopMotor();
-void myActionMoveSlow();
-void myActionUpdateSlowMovement();
 
-//Conditions
+
+void myAction00();
+void myAction01();
+void myAction02();
+
+void myAction10();
+void myAction11();
+void myAction12();
+void myAction13();
+
+void myAction20();
+
+void myAction30();
+
+
+
+
+
+
 bool myConditionTrue();
 
-//Diagram0
-bool myConditionCOM();
-bool myConditionLOM();
-bool myConditionCOMRequest0();
-bool myConditionCOMRequest1();
+	
+	
+bool myCondition00();
+bool myCondition01();
+bool myCondition02();
 
-//Diagram6
-bool myConditionU1s();
-bool myConditionO1s();
-bool myConditionU6s();
-bool myConditionO6s();
+bool myCondition10();
+bool myCondition11();
+bool myCondition12();
+bool myCondition13();
+
+bool myCondition20();
 
 #endif // MYFUNCTIONS_H_
