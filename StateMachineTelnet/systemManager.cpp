@@ -2,6 +2,9 @@
 #include "systemManager.h"
 #include "stateMachine.h"
 #include "keyboard.h"
+#include "telnet.h"
+#include "motor.h"
+
 #include "myFunctions.h"
 extern "C" 
 {
@@ -10,30 +13,37 @@ extern "C"
 
 #define controlTime 50
 #define profileTime 8000.0
+/*
 #define rampTime 1000.0
 #define slowTime 1000.0
 #define zeroSpeed 2610.0
 #define standardProfileSpeed 1800.0
-#define slowMovementSpeed 200.0
+#define slowMovementSpeed 200.0*/
 
 int speed = 500;
-double profileSpeed;
-double binspeed;
 char output[64];
-bool request = 0; 
+bool request = 0;
 bool dir = 1; // 0 = left, 1 = right
-bool presentDir;
 bool mode = 0; // 0 = lom, 1 = com
 bool presentMode = 0;
+
+
+
+/*double profileSpeed;
+double binspeed; 
+bool presentDir;
+
 int n = 0;
 int nmax = rampTime/controlTime;
 int m = 0;
 int mmax = (profileTime - 2*rampTime)/controlTime;
-int o = 0;
+int o = 0;*/
 
 
 StateMachine * myStateMachine;
 Keyboard * myKeyboard;
+Telnet * myTelnet;
+Motor * myMotor;
 
 SystemManager :: SystemManager() {
 	// Initialize table for all diagrams, event time in ms (POSIX)
@@ -66,7 +76,7 @@ SystemManager :: SystemManager() {
 	//Keyboard
 	tab[2][0] = new TableEntry ("StateK","StateK","Timer2",50,myActionKeyboard,myConditionTrue);
 	
-	//Motor
+	//Motor State
 	tab[3][0] = new TableEntry ("StateMotorIdle","StateCustomProfile","TrigStartCustomProfile",0,myActionRunCustomProfile,myConditionTrue);
 	tab[3][1] = new TableEntry ("StateMotorIdle","StateStandardProfile","TrigStartStandardProfile",0,myActionRunStandardProfile,myConditionTrue);
 	tab[3][2] = new TableEntry ("StateCustomProfile","StateMotorIdle","Timer8s",profileTime,myActionCustomProfileDone,myConditionTrue); 
@@ -91,7 +101,7 @@ SystemManager :: SystemManager() {
 	tab[5][4] = new TableEntry ("StateWaitForAnswer","StateWaitForRelease","getReady",0,myActionStartSlowMovement2,myConditionTrue);
 	tab[5][5] = new TableEntry ("StateWaitForRelease","StateIdleMovingCOM","getRelease",0,myActionMovementDone,myConditionTrue);
 	
-	//Motor Controller
+	//Motor Speed
 	tab[6][0] = new TableEntry ("StateControllerIdle","StateControllerRampUp","TrigStartProfile",0,myActionStartRampUp,myConditionTrue); 
 	tab[6][1] = new TableEntry ("StateControllerRampUp","StateControllerRampUp","Timer50ms",controlTime,myActionUpdateRampUp,myConditionU1s);	
 	tab[6][2] = new TableEntry ("StateControllerRampUp","StateControllerConstant","Timer50ms",controlTime,myActionStartConstantMovement,myConditionO1s); 
@@ -104,6 +114,7 @@ SystemManager :: SystemManager() {
 	tab[6][9] = new TableEntry ("StateControllerSlowMovement","StateControllerSlowMovement","Timer50ms",controlTime,myActionUpdateSlowMovement,myConditionTrue);
 	tab[6][10] = new TableEntry ("StateControllerSlowMovement","StateControllerIdle","TrigSlowMovementDone",0,myActionStopMotor,myConditionTrue);
 
+	//tab[7][0] = new TableEntry ("StateControllerSlowMovement","StateControllerIdle","TrigSlowMovementDone",0,myActionStopMotor,myConditionTrue);
 	
 	//tab[0][1] = new TableEntry ("StateA","StateB","Timer0",2000,myAction01,myCondition01);
 	//tab[0][2] = new TableEntry ("StateB","StateA","Trigg0",0,myAction02,myCondition02);
@@ -152,7 +163,13 @@ SystemManager :: SystemManager() {
 	
 	// Create instance of my Keyboard
 	myKeyboard = new Keyboard;
-
+	
+	myTelnet = new Telnet;
+	
+	myMotor = new Motor;
+	/*
+	myMotor->setParent(this);
+	*/
 	// Create instance of state machine
 	myStateMachine = new StateMachine;
 
@@ -419,7 +436,46 @@ void SystemManager :: actionGetWait(){
 	return;
 }
 
-//Diagram 6
+//Diagram6
+void SystemManager :: actionStartRampUp(){
+	myMotor->actionStartRampUp();
+	return;
+}
+void SystemManager :: actionUpdateRampUp(){ 
+	myMotor->actionUpdateRampUp();
+	return;
+}
+void SystemManager :: actionStartConstantMovement(){ 
+	myMotor->actionStartConstantMovement();
+	return;
+}
+void SystemManager :: actionUpdateConstantMovement(){ 
+	myMotor->actionUpdateConstantMovement();
+	return;
+}
+void SystemManager :: actionStartRampDown(){ 
+	myMotor->actionStartRampDown();
+	return;
+}
+void SystemManager :: actionUpdateRampDown(){
+	myMotor->actionUpdateRampDown();
+	return;
+}
+void SystemManager :: actionStopMotor(){ 
+	myMotor->actionStopMotor();
+	return;
+}
+void SystemManager :: actionMoveSlow(){ 
+	myMotor->actionMoveSlow();
+	return;
+}
+void SystemManager :: actionUpdateSlowMovement(){ 
+	myMotor->actionUpdateSlowMovement();
+		return;
+}
+
+/*
+//Diagram 6 alt
 void SystemManager :: actionStartRampUp(){ 
 	switch (presentMode){
 	case 0:
@@ -449,6 +505,8 @@ void SystemManager :: actionStartRampUp(){
 	//writeToDisplay (20, 2, output );
 	return;
 }
+*/
+/*
 void SystemManager :: actionUpdateRampUp(){ 
 	switch (presentDir){
 	case 0:
@@ -463,10 +521,13 @@ void SystemManager :: actionUpdateRampUp(){
 	n++;
 	return;
 }
+*/
+/*
 void SystemManager :: actionStartConstantMovement(){ 
 	m=0;
 	return;
-}
+}*/
+/*
 void SystemManager :: actionUpdateConstantMovement(){ 
 	switch (presentDir){
 	case 0:
@@ -479,11 +540,13 @@ void SystemManager :: actionUpdateConstantMovement(){
 	writeAnalog (0, (int)binspeed);
 	m++;
 	return;
-}
+}*/
+/*
 void SystemManager :: actionStartRampDown(){ 
 	o=0;
 	return;
-}
+}*/
+/*
 void SystemManager :: actionUpdateRampDown(){
 	switch (presentDir){
 	case 0:
@@ -496,23 +559,33 @@ void SystemManager :: actionUpdateRampDown(){
 	writeAnalog (0, (int)binspeed);
 	o++;
 	return;
-}
+}*/
+/*
 void SystemManager :: actionStopMotor(){ 
 	binspeed=zeroSpeed;
 	writeAnalog (0, (int)binspeed);
+	motorOff();
 	return;
-}
+}*/
+/*
 void SystemManager :: actionMoveSlow(){ 
 	profileSpeed = zeroSpeed-slowMovementSpeed*((zeroSpeed+0.0)/2200.0);
 	binspeed = profileSpeed;
 	writeAnalog (0, (int)binspeed);
+	motorOn();
 	return;
-}
+}*/
+/*
 void SystemManager :: actionUpdateSlowMovement(){ 
 	binspeed = profileSpeed;
 	writeAnalog (0, (int)binspeed);
 	return;
-}
+}*/
+
+
+
+
+
 
 //Conditions
 bool SystemManager :: conditionTrue(){
@@ -551,24 +624,24 @@ bool SystemManager :: conditionCOMRequest1(){
 //Diagram6
 
 bool SystemManager :: conditionU1s(){
-	if (n < nmax) {
-		return TRUE;
-	}
-	else return FALSE;
+	return myMotor->conditionU1s();
 }
-
 bool SystemManager :: conditionO1s(){
-	if (n >= nmax) return TRUE;
-	else return FALSE;
+	return myMotor->conditionO1s();
 }
-
 bool SystemManager :: conditionU6s(){
-	if (m < mmax) return TRUE;
-	else return FALSE;
+	return myMotor->conditionU6s();
 }
-
 bool SystemManager :: conditionO6s(){
-	if (m >= mmax) return TRUE;
-	else return FALSE;
+	return myMotor->conditionO6s();
 }
-
+//Methods
+int SystemManager :: getSpeed () {
+	return speed;
+}
+bool SystemManager :: getDir () {
+	return dir;
+}
+bool SystemManager :: getPresentMode () {
+	return presentMode;
+}

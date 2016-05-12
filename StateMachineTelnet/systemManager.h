@@ -14,6 +14,11 @@ class SystemManager {
 public:
 	SystemManager();
 	~SystemManager();
+	
+	int getSpeed();
+	bool getDir();
+	bool getPresentMode();
+	
 	//Diagram0
 	void actionDirLeft();
 	void actionDirRight();

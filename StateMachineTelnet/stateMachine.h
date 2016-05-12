@@ -15,6 +15,7 @@ public:
 	~StateMachine();
 	void sendEvent(std::string myEvent);
 	void runToCompletion();
+
 	std::string myEvent;
 	DiaTimer * diaTimerTable[MAXDIA];
 
